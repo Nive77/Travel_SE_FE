@@ -34,11 +34,11 @@ const connect = async() => {
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(cookieParser())
-app.use("https://travel-back-zswi.onrender.com/auth", authRoute)
-app.use("https://travel-back-zswi.onrender.com/tours", tourRoute)
-app.use("https://travel-back-zswi.onrender.com/users", userRoute)
-app.use("https://travel-back-zswi.onrender.com/review", reviewRoute)
-app.use("https://travel-back-zswi.onrender.com/booking", bookingRoute)
+app.use("/api/v1/auth", authRoute)
+app.use("/api/v1/tours", tourRoute)
+app.use("/api/v1/users", userRoute)
+app.use("/api/v1/review", reviewRoute)
+app.use("/api/v1/booking", bookingRoute)
 
 app.listen(port, () => {
    connect()
