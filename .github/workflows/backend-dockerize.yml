@@ -28,8 +28,4 @@ jobs:
       - name: Delete old container
         run: docker rm -f nodejs-app-container  
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name nodejs-app-container \
-             -e PORT=4000 \
-             -e MONGO_URI='${{ secrets.MONGO_URI }}' \
-             -e JWT_SECRET_KEY='${{ secrets.JWT_SECRET_KEY }}' \
-             nivetha77/mern-backend
+        run: docker run -d -p 4000:4000 --name nodejs-app-container -e PORT=4000 -e MONGO_URI='${{ secrets.MONGO_URI }}' -e JWT_SECRET_KEY='${{ secrets.JWT_SECRET_KEY }}' nivetha77/mern-backend
