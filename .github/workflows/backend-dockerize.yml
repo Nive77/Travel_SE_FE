@@ -1,0 +1,31 @@
+
+name: Deploy Node-js Application
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
+      - name: Build Docker Image
+        run: docker build -t nivetha77/mern-backend  .
+      - name: Publish Image to docker hub
+        run: docker push nivetha77/mern-backend:latest 
+ 
+  deploy:
+    needs: build
+    runs-on: self-hosted 
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull nivetha77/mern-backend:latest 
+      - name: Delete old container
+        run: docker rm -f mern-backend-container  
+      - name: Run Docker Container
+        run: docker run -d -p 4000:4000 --name mern-backend-container --init -e PORT=4000 -e MONGO_URI='${{ secrets.MONGO_URI }}' -e JWT_SECRET_KEY='${{ secrets.JWT_SECRET_KEY }}' nivetha77/mern-backend
